@@ -1,6 +1,7 @@
 import React from "react";
 import InQuery_logo from "../assets/images/InQuery_logo.png";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { Outlet, Link } from "react-router-dom";
 
 class Navbar extends React.Component {
     render() {
@@ -16,16 +17,16 @@ class Navbar extends React.Component {
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav ms-auto" style={{fontSize: 20}}>
                     <li class="nav-item mx-3">
-                      <a className="nav-link active" aria-current="page" href="#" style={{color: "#f7838d"}}>Home</a>
+                      <a className="nav-link active" aria-current="page" href="/" style={{color: "#f7838d"}}>Home</a>
                     </li>
                     <li class="nav-item mx-3">
-                      <a class="nav-link" href="#" style={{color: "#b74c4d"}}>Dashboard</a>
+                      <a class="nav-link" href="/dashboard" style={{color: "#b74c4d"}}>Dashboard</a>
                     </li>
                     <li class="nav-item mx-3">
                       <a class="nav-link" href="#" style={{color: "#b74c4d"}}>Safeguards</a>
                     </li>
                     <li class="nav-item mx-3">
-                      <a class="nav-link" style={{color: "#b74c4d"}}>About us</a>
+                      <a class="nav-link" href="/aboutus" style={{color: "#b74c4d"}}>About us</a>
                     </li>
                   </ul>
                 </div>

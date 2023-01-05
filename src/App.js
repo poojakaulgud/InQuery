@@ -1,5 +1,8 @@
 import './App.css';
 import Navbar from './components/Navbar'
+import Dashboard from './components/Dashboard'
+import AboutUs from './components/AboutUs'
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,6 +15,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
+  {
+    path: "/aboutus",
+    element: <AboutUs />,
+  }
 ]);
 
 function App() {

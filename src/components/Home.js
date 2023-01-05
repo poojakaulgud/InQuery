@@ -4,7 +4,7 @@ import '../css/Home.css';
 const Home = () => {
     return (
         <div className="home" >
-            <div className="container d-flex flex-column justify-content-center align-items-center" style={{minHeight: "550px"}}>
+            <div className="container d-flex flex-column justify-content-center align-items-center" style={{height: "89.2vh"}}>
                 <div className="container-fuild text-center mb-2 text-light">
                     <h2>"Everything About Crime in India"</h2>
                 </div>
