@@ -1,0 +1,9 @@
+.canvas{
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+.customtooltip.e-tooltip-wrap .e-tip-content {
+    color: #fff;
+    font-size: 12px;
+}
