@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 function App() {
   return (
       <div className="App">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="content">
           <RouterProvider router={router} />
         </div>

@@ -1,9 +1,11 @@
 import '../../node_modules/font-awesome/css/font-awesome.min.css'; 
 import '../css/Home.css';
+import Navbar from './Navbar';
 
 const Home = () => {
     return (
         <div className="home" >
+            <Navbar />
             <div className="container d-flex flex-column justify-content-center align-items-center" style={{height: "89.2vh"}}>
                 <div className="container-fuild text-center mb-2 text-light">
                     <h2>"Everything About Crime in India"</h2>
