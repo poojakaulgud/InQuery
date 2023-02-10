@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
-import { Tooltip as ReactTooltip } from "react-tooltip";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import * as d3 from "d3";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -61,6 +62,12 @@ const IndiaMap = () => {
       { id: "PY", state: "Puducherry", value: dataval[35] },
     ];
   };
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {tooltipContent}
+    </Tooltip>
+  );
 
   useEffect(() => {
     console.log("Map use effect ran");
@@ -180,7 +187,9 @@ const IndiaMap = () => {
     <div>
       <Container>
         <Row>
-          <ReactTooltip cssClass="customtooltip">{tooltipContent}</ReactTooltip>
+        <OverlayTrigger placement="top"
+      delay={{ show: 250, hide: 400 }}
+      overlay={renderTooltip}>
           <ComposableMap
             projectionConfig={PROJECTION_CONFIG}
             projection="geoMercator"
@@ -207,6 +216,8 @@ const IndiaMap = () => {
               }
             </Geographies>
           </ComposableMap>
+        </OverlayTrigger>
+          
         </Row>
 
         <Row className="text-center p-4">

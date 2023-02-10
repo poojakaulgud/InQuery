@@ -552,39 +552,40 @@ const Dashboard = () => {
             ],
           },
         });
-      } else if (event.target.value === "ipc") {
-        newChart = new Chart(document.getElementById("lineChart"), {
-          type: "bar",
-          spanGaps: false,
-          data: {
-            labels: states2020,
-            backgroundColor: "#8B0000",
+      } 
+      // else if (event.target.value === "ipc") {
+      //   newChart = new Chart(document.getElementById("lineChart"), {
+      //     type: "bar",
+      //     spanGaps: false,
+      //     data: {
+      //       labels: states2020,
+      //       backgroundColor: "#8B0000",
 
-            datasets: [
-              {
-                label: "IPC Crime 2016",
-                data: staterateipc2016,
-              },
-              {
-                label: "IPC Crime 2017",
-                data: staterateipc2017,
-              },
-              {
-                label: "IPC Crime 2018",
-                data: staterateipc2018,
-              },
-              {
-                label: "IPC Crime 2019",
-                data: staterateipc2019,
-              },
-              {
-                label: "IPC Crime 2020",
-                data: staterateipc2020,
-              },
-            ],
-          },
-        });
-      }
+      //       datasets: [
+      //         {
+      //           label: "IPC Crime 2016",
+      //           data: staterateipc2016,
+      //         },
+      //         {
+      //           label: "IPC Crime 2017",
+      //           data: staterateipc2017,
+      //         },
+      //         {
+      //           label: "IPC Crime 2018",
+      //           data: staterateipc2018,
+      //         },
+      //         {
+      //           label: "IPC Crime 2019",
+      //           data: staterateipc2019,
+      //         },
+      //         {
+      //           label: "IPC Crime 2020",
+      //           data: staterateipc2020,
+      //         },
+      //       ],
+      //     },
+      //   });
+      // }
     } else {
       newChart = new Chart(document.getElementById("lineChart"), {
         type: "line",
@@ -663,7 +664,7 @@ const Dashboard = () => {
                     </option>
                     <option value={"kidnapping"}>Kidnapping</option>
                     <option value={"theft"}>Theft</option>
-                    <option value={"ipc"}>IPC Crimes</option>
+                    {/* <option value={"ipc"}>IPC Crimes</option> */}
                   </Form.Select>
                 </Col>
               </Row>
