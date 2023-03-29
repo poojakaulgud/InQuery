@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+backend/data/API_SECRET_KEY.txt
+
 # testing
 /coverage
 
