@@ -27,7 +27,7 @@ class Navbar extends React.Component {
                       <Link class="nav-link" to="/dashboard" style={window.location.pathname === "/dashboard" ? {color: "#f7838d"} : {color: "#b74c4d"}}>Dashboard</Link>
                     </li>
                     <li class="nav-item mx-3">
-                      <Link class="nav-link" to="#" style={window.location.pathname === "/safeguards" ? {color: "#f7838d"} : {color: "#b74c4d"}}>Safeguards</Link>
+                      <Link class="nav-link" to="/safeguards" style={window.location.pathname === "/safeguards" ? {color: "#f7838d"} : {color: "#b74c4d"}}>Safeguards</Link>
                     </li>
                     <li class="nav-item mx-3">
                       <Link class="nav-link" to="/aboutus" style={window.location.pathname === "/aboutus" ? {color: "#f7838d"} : {color: "#b74c4d"}}>About us</Link>
