@@ -8,11 +8,9 @@ import IndiaMap from "./IndiaMap.js";
 import "../css/Dashboard.css";
 import Form from "react-bootstrap/Form";
 import Navbar from "./Navbar.js";
-
 const Dashboard = () => {
   const [n, setN] = useState(0);
   const [currentChart, setCurrentChart] = useState();
-
   const states2016 = [];
   const states2017 = [];
   const states2018 = [];
@@ -47,7 +45,6 @@ const Dashboard = () => {
   const stateratewomencrime2020 = [];
   const stateratemurder2020 = [];
   const stateratekidnapping2020 = [];
-
   const rate = [];
   const rate2016 = [];
   const rate2017 = [];
@@ -65,6 +62,71 @@ const Dashboard = () => {
   const ratewomencrime = [];
   const ratemurder = [];
   const ratekidnapping = [];
+  const dummy1=['2016','2017','2018','2019','2020']
+  const dummy2=[1,2,3,4,5]
+  function getVisualization(list1,list2,bool) {
+    if(bool){
+      console.log(list1);
+      console.log(list2);
+      var length=list1.length;
+      console.log(length)
+      var x = document.getElementById("visualization");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      if(length<=5){
+        new Chart(document.getElementById("chart"), {
+          type: "pie",
+          data: {
+            labels: list1,
+            datasets: [
+              {
+                label: "Total crime",
+                data: list2,
+              },
+            ],
+          },
+        });
+      }
+      else if(length>5 && length<=10){
+        new Chart(document.getElementById("chart"), {
+          type: "bar",
+          data: {
+            labels: list1,
+            datasets: [
+              {
+                
+                data: list2,
+                backgroundColor: "#8B0000",
+              },
+            ],
+          },
+        });
+      }
+      else{
+        new Chart(document.getElementById("chart"), {
+          type: "line",
+          spanGaps: false,
+          data: {
+            labels: list1,
+            backgroundColor: "#8B0000",
+
+            datasets: [
+              {
+                data: list2,
+              },
+            ],
+          },
+        })
+      }
+
+    }
+    
+  };
+  
+
 
   const fetchData = async () => {
     const stateData = "http://localhost:3000/StateCrime.csv";
@@ -153,14 +215,11 @@ const Dashboard = () => {
         }
       }
     });
-
     const chartdata = "http://localhost:3000/CrimeData.csv";
     await d3.csv(chartdata).then(function (datapoints) {
       for (var i = 0; i < datapoints.length; i++) {
         rate.push(datapoints[i].Count);
         if (datapoints[i].Year == "2020") {
-          // year2020.push(datapoints[i].Year);
-          // district2020.push(datapoints[i].District);
           rate2020.push(datapoints[i].Count);
           if (datapoints[i].Crime == "Cybercrime") {
             ratecybercrime.push(datapoints[i].Count);
@@ -177,8 +236,6 @@ const Dashboard = () => {
             ratekidnapping.push(datapoints[i].Count);
           }
         } else if (datapoints[i].Year == "2019") {
-          // year2019.push(datapoints[i].Year);
-          // district2019.push(datapoints[i].District);
           rate2019.push(datapoints[i].Count);
           if (datapoints[i].Crime == "Cybercrime") {
             ratecybercrime.push(datapoints[i].Count);
@@ -195,8 +252,6 @@ const Dashboard = () => {
             ratekidnapping.push(datapoints[i].Count);
           }
         } else if (datapoints[i].Year == "2018") {
-          // year2018.push(datapoints[i].Year);
-          // district2018.push(datapoints[i].District);
           rate2018.push(datapoints[i].Count);
           if (datapoints[i].Crime == "Cybercrime") {
             ratecybercrime.push(datapoints[i].Count);
@@ -213,8 +268,6 @@ const Dashboard = () => {
             ratekidnapping.push(datapoints[i].Count);
           }
         } else if (datapoints[i].Year == "2017") {
-          // year2017.push(datapoints[i].Year);
-          // district2017.push(datapoints[i].District);
           rate2017.push(datapoints[i].Count);
           if (datapoints[i].Crime == "Cybercrime") {
             ratecybercrime.push(datapoints[i].Count);
@@ -231,8 +284,6 @@ const Dashboard = () => {
             ratekidnapping.push(datapoints[i].Count);
           }
         } else if (datapoints[i].Year == "2016") {
-          // year2016.push(datapoints[i].Year);
-          // district2016.push(datapoints[i].District);
           rate2016.push(datapoints[i].Count);
           if (datapoints[i].Crime == "Cybercrime") {
             ratecybercrime.push(datapoints[i].Count);
@@ -250,52 +301,9 @@ const Dashboard = () => {
           }
         }
       }
-      // let totalcrime = 0;
-
-      // for (let num of rate){
-
-      //     totalcrime = totalcrime + Number(num)
-      // }
-
-      // let totalcrime2016 = 0;
-
-      // for (let num of rate2016){
-
-      //     totalcrime2016 = totalcrime2016 + Number(num)
-      // }
-      // let totalcrime2017 = 0;
-
-      // for (let num of rate2017){
-
-      //     totalcrime2017 = totalcrime2017 + Number(num)
-      // }
-      // let totalcrime2018 = 0;
-
-      // for (let num of rate2018){
-
-      //     totalcrime2018 = totalcrime2018 + Number(num)
-      // }
-      // let totalcrime2019 = 0;
-
-      // for (let num of rate2019){
-
-      //     totalcrime2019 = totalcrime2019 + Number(num)
-      // }
-      // let totalcrime2020 = 0;
-
-      // for (let num of rate2020){
-
-      //     totalcrime2020 = totalcrime2020 + Number(num)
-      // }
 
       let totalcybercrime = 0;
-      // for (let num of ratecybercrime){
-
-      //     totalcybercrime = totalcybercrime + Number(num)
-      // }
-
       let totalwomencrime = 0;
-
       for (let num of ratewomencrime) {
         totalwomencrime = totalwomencrime + Number(num);
       }
@@ -310,22 +318,18 @@ const Dashboard = () => {
         totalmurdercrime = totalmurdercrime + Number(num);
       }
       let totaltheftcrime = 0;
-
       for (let num of ratetheft) {
         totaltheftcrime = totaltheftcrime + Number(num);
       }
       let ipc2016 = 0;
-
       for (let num of rateipc2016) {
         ipc2016 = ipc2016 + Number(num);
       }
       let ipc2017 = 0;
-
       for (let num of rateipc2017) {
         ipc2017 = ipc2017 + Number(num);
       }
       let ipc2018 = 0;
-
       for (let num of rateipc2018) {
         ipc2018 = ipc2018 + Number(num);
       }
@@ -636,14 +640,32 @@ const Dashboard = () => {
   return (
     <div className="graph">
       <Navbar />
-      {/* <br></br> */}
-
-      {/* <Container fluid>
-      <Row style={{textAlign:'center',color:'#b74c4d'}}>
-        <Col><h1>{n}</h1>
-        <h4>Total crime in India till 2020</h4></Col>
-      </Row>
-    </Container> */}
+      
+      <Container>
+        <Row>
+          <Col>
+          <center>
+          <div class="input-group" >
+          <input type="search" placeholder="What is the crime count of Mumbai in 2018?" aria-describedby="button-addon1" className="form-control border-0 bg-light " 
+          />
+          {/* list length 5 ['2016','2017','2018','2019','2020'], [1,2,3,4,5]
+          list lenth 6  ['2016','2017','2018','2019','2020','2021'], [1,2,3,4,5,6]
+          list length 10 ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],[1,2,3,4,5,6,3,16,2,11]
+          list length 15 ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'],[1,2,3,4,5,6,3,16,2,11,21,10,15,9,20] */}
+          <div class="input-group-append">
+              <button id="button-addon1" type="submit" class="btn btn-link text-danger"><i onClick={() => getVisualization( ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'],[1,2,3,4,5,6,3,16,2,11,21,10,15,9,20],true)} class="fa fa-search"></i></button>
+          </div>
+          </div>
+        </center>
+          </Col>
+        </Row>
+         <Row>
+          <Col lg style={{display:'none', height: "50vh", width: "50vh" }} id="visualization" className="center-block">
+            <canvas className="canvas"  id="chart"style={{margin: "0 auto"}}></canvas>
+          </Col> 
+        </Row> 
+      </Container> 
+      
       <Container fluid className="py-4">
         <Row className="row">
           <Col lg>
@@ -676,17 +698,29 @@ const Dashboard = () => {
             </Container>
           </Col>
         </Row>
-
         <Row className="row mt-5" >
           <Col lg className="col">
-            <canvas className="canvas" id="barchart"></canvas>
+          <canvas className="canvas" id="barchart"></canvas>
           </Col>
           <Col lg style={{ height: "50vh", width: "50vh" }} className="center-block">
-            <canvas className="canvas" id="pie" style={{margin: "0 auto"}}></canvas>
+          <canvas className="canvas" id="pie" style={{margin: "0 auto"}}></canvas>
           </Col>
-        </Row>
-        
+        </Row> 
       </Container>
+      <Container>
+      <Row className="py-2">
+                <Col lg>
+                  <canvas className="canvas" id="barchart1"></canvas>
+                </Col>
+              </Row>
+      </Container>
+      {/* <br></br> */}
+      {/* <Container fluid>
+      <Row style={{textAlign:'center',color:'#b74c4d'}}>
+        <Col><h1>{n}</h1>
+        <h4>Total crime in India till 2020</h4></Col>
+      </Row>
+    </Container> */}
     </div>
   );
 };

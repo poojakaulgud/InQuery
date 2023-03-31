@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Carousel from 'react-grid-carousel'
+import Accordion from 'react-bootstrap/Accordion';
 
 
 
@@ -19,49 +20,42 @@ const Safeguards = () => {
                     <Col xs lg="6">
                         <h1>Helpline Numbers</h1>
                         <br></br>
-                        <Dropdown>
-                            <Dropdown.Toggle style={{backgroundColor: "#121212", border:'0', padding:'0', color: '#f7838d'}} id="dropdown-basic">
-                            Important emergency numbers
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            
-                                <Dropdown.Item >NATIONAL EMERGENCY NUMBER-112</Dropdown.Item>
-                                <Dropdown.Item >POLICE-100</Dropdown.Item>
-                                <Dropdown.Item >FIRE-101</Dropdown.Item>
-                                <Dropdown.Item >AMBULANCE-102</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Accordion >
+                        <Accordion.Item eventKey="0" style={{border:'none', color: '#f7838d'}}>
+                            <Accordion.Header >Important emergency numbers</Accordion.Header>
+                            <Accordion.Body >
+                            <br></br>
+                            NATIONAL EMERGENCY NUMBER-112<br></br>
+                            POLICE-100<br></br>
+                            FIRE-101<br></br>
+                            AMBULANCE-102<br></br>
+                            </Accordion.Body>
+                        </Accordion.Item>
                         <hr></hr>
-                        <Dropdown>
-                            <Dropdown.Toggle style={{backgroundColor: "#121212", border:'0', padding:'0', color: '#f7838d'}} id="dropdown-basic">
-                            Helpline Numbers for women, children and senior citizen
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                            
-                                <Dropdown.Item >Women Helpline: 1091</Dropdown.Item>
-                                <Dropdown.Item >Women Helpline - Domestic Abuse: 181</Dropdown.Item>
-                                <Dropdown.Item >Senior Citizen Helpline: 1091/ 1291</Dropdown.Item>
-                                <Dropdown.Item >Children In Difficult Situation: 1098</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Accordion.Item eventKey="1"  style={{border:'none', color: '#f7838d'}}>
+                            <Accordion.Header>Helpline Numbers for women, children and senior citizen</Accordion.Header>
+                            <Accordion.Body><br></br>
+                                Women Helpline: 1091<br></br>
+                                Women Helpline - Domestic Abuse: 181<br></br>
+                                Senior Citizen Helpline: 1091/ 1291<br></br>
+                                Children In Difficult Situation: 1098<br></br>
+                            </Accordion.Body>
+                        </Accordion.Item>
                         <hr></hr>
-                        <Dropdown>
-                            <Dropdown.Toggle style={{backgroundColor: "#121212", border:'0', padding:'0', color: '#f7838d'}} id="dropdown-basic">
-                            Medical help and Accidents Helpline Numbers 
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
+                        <Accordion.Item eventKey="2" style={{border:'none', color: '#f7838d'}}>
+                            <Accordion.Header>Medical help and Accidents Helpline Numbers </Accordion.Header>
+                            <Accordion.Body><br></br>
+                                Air Ambulance-9540161344<br></br>
+                                Medical Helpline: 108<br></br>
+                                Road Accident Emergency Service:1073<br></br>
+                                Railway Accident Emergency Service:1072<br></br>
+                                Disaster Management Services: 108<br></br>
+                                Hospital On Wheels: 104<br></br>
                             
-                                <Dropdown.Item >Air Ambulance-9540161344</Dropdown.Item>
-                                <Dropdown.Item >Medical Helpline: 108</Dropdown.Item>
-                                <Dropdown.Item >Road Accident Emergency Service:1073</Dropdown.Item>
-                                <Dropdown.Item >Railway Accident Emergency Service:1072</Dropdown.Item>
-                                <Dropdown.Item >Disaster Management Services: 108</Dropdown.Item>
-                                <Dropdown.Item >Hospital On Wheels: 104</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        </Accordion>
+                        
                         <hr></hr>
                     </Col>
                     <Col xs lg="6">

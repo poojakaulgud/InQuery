@@ -19,3 +19,16 @@ h4{
 h3{
     color: white;
 }
+.accordion-button{
+    background-color: #121212;
+    color: white;
+    border: none
+
+}
+.accordion {
+    --bs-accordion-active-bg: none;
+    --bs-accordion-active-color: white;
+    --bs-accordion-btn-focus-box-shadow: white;
+}
+
+

@@ -1,3 +1,10 @@
+*
+{
+    color: #f7838d;
+    background-color: #121212;
+    padding: 0;
+    margin: 0;
+}
 .canvas{
     border: 0;
     margin: 0;
@@ -6,4 +13,8 @@
 .customtooltip.e-tooltip-wrap .e-tip-content {
     color: #fff;
     font-size: 12px;
+}
+Container{
+    margin: 0;
+    padding: 0;
 }

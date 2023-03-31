@@ -17,7 +17,7 @@ const AboutUs = () => {
       <Row>
         <Col>
             <center>
-                <h4>We at <span style={{color: '#b74c4d'}}>InQuery</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit</h4>
+                <h4>We at <span style={{color: '#b74c4d'}}>InQuery</span> aim to provide you with all the necessary information which will help you stay informed about the current facts and figures in indian crime and safety measures that would help you under unfortunate circumstances.</h4>
             </center>
         </Col>
       </Row>
