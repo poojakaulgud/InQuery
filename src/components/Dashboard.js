@@ -8,8 +8,11 @@ import IndiaMap from "./IndiaMap.js";
 import "../css/Dashboard.css";
 import Form from "react-bootstrap/Form";
 import Navbar from "./Navbar.js";
+import axios from 'axios';
+
 const Dashboard = () => {
-  const [n, setN] = useState(0);
+  const [prompt, setPrompt] = useState("");
+
   const [currentChart, setCurrentChart] = useState();
   const states2016 = [];
   const states2017 = [];
@@ -64,7 +67,36 @@ const Dashboard = () => {
   const ratekidnapping = [];
   const dummy1=['2016','2017','2018','2019','2020']
   const dummy2=[1,2,3,4,5]
-  function getVisualization(list1,list2,bool) {
+
+  var bool = false;
+  var list1 = [];
+  var list2 = [];
+
+  const [finalAnswer, setFinalAnswer] = useState("")
+  // const [plotData, setPlotData] = useState([])
+
+  async function getAnswer(prompt) {
+    console.log(prompt);
+
+    await axios.get('http://localhost:5000/question/metric?prompt=' + prompt).then((res) => {
+      console.log(res.data['finalAnswer']);
+
+      // setFinalAnswer(res.data['finalAnswer']);
+      var answer = document.getElementById("finalAnswer");
+      answer.innerHTML = res.data['finalAnswer'];
+      if (answer.style.display === "none") {
+        answer.style.display = "block";
+      }
+      // setPlotData(res.data['data'])
+      if(res.data['data'].length != 0){
+        list1 = res.data['data'][0];
+        list2 = res.data['data'][1];
+        bool = true
+      } 
+    }).catch((error) => {
+      console.log(error.message);
+    })
+    
     if(bool){
       console.log(list1);
       console.log(list2);
@@ -125,7 +157,6 @@ const Dashboard = () => {
     }
     
   };
-  
 
 
   const fetchData = async () => {
@@ -345,7 +376,6 @@ const Dashboard = () => {
       }
       let totalcrime = 0;
       totalcrime = ipc2016 + ipc2017 + ipc2018 + ipc2019 + ipc2020;
-      setN(totalcrime);
 
       new Chart(document.getElementById("barchart"), {
         type: "bar",
@@ -646,17 +676,25 @@ const Dashboard = () => {
           <Col>
           <center>
           <div class="input-group" >
-          <input type="search" placeholder="What is the crime count of Mumbai in 2018?" aria-describedby="button-addon1" className="form-control border-0 bg-light " 
+          <input 
+            type="search" 
+            placeholder="Eg: What is the crime count of Mumbai in 2018?" 
+            aria-describedby="button-addon1" 
+            className="form-control border-0 bg-light"
+            value={prompt}
+            onChange={e => setPrompt(e.target.value)} 
           />
           {/* list length 5 ['2016','2017','2018','2019','2020'], [1,2,3,4,5]
           list lenth 6  ['2016','2017','2018','2019','2020','2021'], [1,2,3,4,5,6]
           list length 10 ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],[1,2,3,4,5,6,3,16,2,11]
           list length 15 ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'],[1,2,3,4,5,6,3,16,2,11,21,10,15,9,20] */}
           <div class="input-group-append">
-              <button id="button-addon1" type="submit" class="btn btn-link text-danger"><i onClick={() => getVisualization( ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'],[1,2,3,4,5,6,3,16,2,11,21,10,15,9,20],true)} class="fa fa-search"></i></button>
+              <button id="button-addon1" type="submit" class="btn btn-link text-danger"><i onClick={() => getAnswer(prompt)} class="fa fa-search"></i></button>
           </div>
           </div>
         </center>
+        <br/>
+        <h6 id="finalAnswer" style={{display: "none"}}></h6> 
           </Col>
         </Row>
          <Row>

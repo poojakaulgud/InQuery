@@ -67,13 +67,22 @@ def get_answer_from_sql(prompt, conn):
     final_query = sql_query
 
   print('query after location change', final_query)
-  answer_row = pd.read_sql(final_query, conn)
-  print('answer after sql query', answer_row)
-  final_answer = answer_row.iloc[0][0]
+  answer = pd.read_sql(final_query, conn)
+  # answer = pd.read_sql("SELECT Year, Cases FROM ipc WHERE District = 'Alwar'", conn)
+  print('answer after sql query', answer)
 
-  print('final answer', final_answer)
+  number_of_rows = len(answer)
+  print('length of sql query', number_of_rows)
 
-  return final_answer
+  # if number_of_rows == 1:
+  #   final_answer = answer.iloc[0][0]
+
+  # else:
+  #   final_answer = answer
+
+  # print('final answer', final_answer)
+
+  return answer
 
 
 
@@ -97,11 +106,28 @@ for (question, answer) in answer_formats.itertuples(name=None, index=False):
 def connect_and_get_from_sql(prompt):
 
   conn = sq.connect('data/inquery.sqlite')
-  final_numeric_answer = get_answer_from_sql(prompt, conn)
-  final_answer = get_answer(prompt, gpt_answer, final_numeric_answer)
+  answer = get_answer_from_sql(prompt, conn)
+
+  final_numeric_answer = -1
+  data = []
+
+  if answer.shape[0] == 1:
+    print("ANSWER IS A SINGLE VALUE ", answer.iloc[0][0])
+    final_numeric_answer = answer.iloc[0][0]
+
+  else:
+    print("ANSWER IS MULTIPLE VALUE ")
+    lst = list(answer.itertuples(index=False, name=None))
+    data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))]
+    
   conn.close()
 
-  return final_answer
+  final_answer = get_answer(prompt, gpt_answer, final_numeric_answer)
+
+  return {
+    "finalAnswer": final_answer,
+    "data": data
+  }
 
 
 # loadKey()
