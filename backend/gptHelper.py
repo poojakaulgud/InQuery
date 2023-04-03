@@ -71,9 +71,6 @@ def get_answer_from_sql(prompt, conn):
   # answer = pd.read_sql("SELECT Year, Cases FROM ipc WHERE District = 'Alwar'", conn)
   print('answer after sql query', answer)
 
-  number_of_rows = len(answer)
-  print('length of sql query', number_of_rows)
-
   # if number_of_rows == 1:
   #   final_answer = answer.iloc[0][0]
 
@@ -86,12 +83,11 @@ def get_answer_from_sql(prompt, conn):
 
 
 
-def get_answer(prompt, gpt_answer, final_answer):
+def get_answer(prompt, gpt_answer):
   answer_format = gpt_answer.get_top_reply(prompt)[8:]
   print('answer format', answer_format)
-  answer_to_query = answer_format.replace('{}', str(final_answer))
 
-  return answer_to_query
+  return answer_format
 
 
 
@@ -100,7 +96,7 @@ gpt_answer = GPT(engine="davinci", temperature=0, max_tokens=100)
 answer_formats = pd.read_csv('data/gpt answer format.csv')
 
 for (question, answer) in answer_formats.itertuples(name=None, index=False):
-      gpt_answer.add_example(Example(question, answer))
+  gpt_answer.add_example(Example(question, answer))
 
 
 def connect_and_get_from_sql(prompt):
@@ -108,21 +104,22 @@ def connect_and_get_from_sql(prompt):
   conn = sq.connect('data/inquery.sqlite')
   answer = get_answer_from_sql(prompt, conn)
 
-  final_numeric_answer = -1
-  data = []
+  answer_format = get_answer(prompt, gpt_answer)
 
-  if answer.shape[0] == 1:
+  final_numeric_answer = -1
+
+  lst = list(answer.itertuples(index=False, name=None))
+  data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))]
+
+  # if answer.shape[0] == 1:
+  if '\{\}' in answer_format:
     print("ANSWER IS A SINGLE VALUE ", answer.iloc[0][0])
     final_numeric_answer = answer.iloc[0][0]
 
-  else:
-    print("ANSWER IS MULTIPLE VALUE ")
-    lst = list(answer.itertuples(index=False, name=None))
-    data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))]
-    
-  conn.close()
 
-  final_answer = get_answer(prompt, gpt_answer, final_numeric_answer)
+  final_answer = answer_format.replace('\{\}', str(final_numeric_answer))
+
+  conn.close()
 
   return {
     "finalAnswer": final_answer,
