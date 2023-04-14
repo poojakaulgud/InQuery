@@ -15,7 +15,9 @@ def loadKey():
 
 def get_sql_query(prompt):
   response = openai.Completion.create(
-    model="davinci:ft-personal-2023-02-14-16-36-05",
+    #model="davinci:ft-personal-2023-02-14-16-36-05",
+    # model="davinci:ft-personal-2023-04-10-13-56-18",
+    model="davinci:ft-personal-2023-04-10-16-35-44",
     temperature=0,
     prompt=prompt+"->",
     stop=["\n"],
@@ -109,15 +111,15 @@ def connect_and_get_from_sql(prompt):
   final_numeric_answer = -1
 
   lst = list(answer.itertuples(index=False, name=None))
-  data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))]
+  data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
 
   # if answer.shape[0] == 1:
-  if '\{\}' in answer_format:
+  if '{}' in answer_format:
     print("ANSWER IS A SINGLE VALUE ", answer.iloc[0][0])
     final_numeric_answer = answer.iloc[0][0]
 
 
-  final_answer = answer_format.replace('\{\}', str(final_numeric_answer))
+  final_answer = answer_format.replace('{}', str(final_numeric_answer))
 
   conn.close()
 

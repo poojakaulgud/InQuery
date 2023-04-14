@@ -12,6 +12,7 @@ import axios from 'axios';
 
 const Dashboard = () => {
   const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [currentChart, setCurrentChart] = useState();
   const states2016 = [];
@@ -78,6 +79,8 @@ const Dashboard = () => {
   async function getAnswer(prompt) {
     console.log(prompt);
 
+    setIsLoading(true);
+
     await axios.get('http://localhost:5000/question/metric?prompt=' + prompt).then((res) => {
       console.log(res.data['finalAnswer']);
 
@@ -93,6 +96,9 @@ const Dashboard = () => {
         list2 = res.data['data'][1];
         bool = true
       } 
+
+      setIsLoading(false);
+
     }).catch((error) => {
       console.log(error.message);
     })
@@ -694,7 +700,8 @@ const Dashboard = () => {
           </div>
         </center>
         <br/>
-        <h6 id="finalAnswer" style={{display: "none"}}></h6> 
+        {isLoading && <h6 id="finalAnswer">Searching...</h6>}
+        <h6 id="finalAnswer" style={{display: "none"}}></h6>
           </Col>
         </Row>
          <Row>
