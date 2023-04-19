@@ -9,8 +9,8 @@ CORS(app)
 def query_metric():
     prompt = request.args.get("prompt")
 
-    # if not checkValidPrompt(prompt):
-    #     return Response(status=404)
+    if not checkValidPrompt(prompt):
+        return Response(status=404)
 
     loadKey()
     finalAnswer = connect_and_get_from_sql(prompt.replace('%20', ' '))

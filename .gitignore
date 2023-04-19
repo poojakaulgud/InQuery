@@ -6,6 +6,7 @@
 .pnp.js
 
 backend/data/API_SECRET_KEY.txt
+backend/__pycache__
 
 # testing
 /coverage
