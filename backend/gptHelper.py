@@ -5,12 +5,46 @@ import pandas as pd
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import sqlite3 as sq
+import nltk
+from nltk.corpus import words, stopwords, wordnet
+import regex as re
 
+table = pd.read_csv('data/allcrime.csv')
+district_names = table.District.unique().tolist()
+state_names = table.State.unique().tolist()
 
 def loadKey():
   with open('data/API_SECRET_KEY.txt') as f:
       data = f.readline()
   openai.api_key = data
+
+
+def isValidLocation(input):  
+  output1 = process.extractOne(input, district_names, scorer=fuzz.ratio, score_cutoff=85)
+  output2 = process.extractOne(input, state_names, scorer=fuzz.ratio, score_cutoff=85)
+  
+  if output1 != None or output2 != None:
+    return True
+  
+  return False
+
+
+
+def checkValidPrompt(prompt):
+
+  keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
+
+  prompt = prompt.replace('?', '')
+
+  for word in prompt.split(' '):
+    word = word.lower()
+    print(word)
+
+    if word not in words.words() and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
+      return False
+    
+  return True
+
 
 
 def get_sql_query(prompt):
@@ -111,7 +145,20 @@ def connect_and_get_from_sql(prompt):
   final_numeric_answer = -1
 
   lst = list(answer.itertuples(index=False, name=None))
-  data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
+  # data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
+  x, y = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][0], [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][1]
+
+  if any(type(item) == int for item in x):
+    if any(2016<=item<=2020 for item in x):
+      data = [x, y]
+
+    else:
+      data = [y, x]
+
+  else:
+    data = [x, y]
+
+  
 
   # if answer.shape[0] == 1:
   if '{}' in answer_format:

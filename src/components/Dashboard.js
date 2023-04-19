@@ -91,7 +91,7 @@ const Dashboard = () => {
         answer.style.display = "block";
       }
       // setPlotData(res.data['data'])
-      if(res.data['data'].length != 0){
+      if(res.data['data'].length > 1){
         list1 = res.data['data'][0];
         list2 = res.data['data'][1];
         bool = true
@@ -100,7 +100,12 @@ const Dashboard = () => {
       setIsLoading(false);
 
     }).catch((error) => {
-      console.log(error.message);
+      setIsLoading(false);
+      var answer = document.getElementById("finalAnswer");
+      answer.innerHTML = "Question is not valid, please try again";
+      if (answer.style.display === "none") {
+        answer.style.display = "block";
+      }
     })
     
     if(bool){
@@ -141,6 +146,13 @@ const Dashboard = () => {
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
         });
       }
       else{
@@ -157,6 +169,13 @@ const Dashboard = () => {
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
         })
       }
 
@@ -706,7 +725,7 @@ const Dashboard = () => {
         </Row>
          <Row>
           <Col lg style={{display:'none'}} id="visualization" className="center-block">
-            <canvas className="canvas"  id="chart"style={{margin: "0 auto", height: "100vh", width: "100vh"}}></canvas>
+            <canvas className="canvas"  id="chart"style={{margin: "0 auto", height: "50vh", width: "50vh"}}></canvas>
           </Col> 
         </Row> 
       </Container> 
