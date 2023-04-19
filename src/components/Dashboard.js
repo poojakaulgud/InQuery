@@ -681,7 +681,7 @@ const Dashboard = () => {
         <Row>
           <Col>
           <center>
-          <div class="input-group" >
+          <div class="input-group" style={{marginTop: 50, marginBottom: 35}}>
           <input 
             type="search" 
             placeholder="Eg: What is the crime count of Mumbai in 2018?" 
@@ -700,17 +700,21 @@ const Dashboard = () => {
           </div>
         </center>
         <br/>
-        {isLoading && <h6 id="finalAnswer">Searching...</h6>}
+        {isLoading && <h6>Searching...</h6>}
         <h6 id="finalAnswer" style={{display: "none"}}></h6>
           </Col>
         </Row>
          <Row>
-          <Col lg style={{display:'none', height: "50vh", width: "50vh" }} id="visualization" className="center-block">
-            <canvas className="canvas"  id="chart"style={{margin: "0 auto"}}></canvas>
+          <Col lg style={{display:'none'}} id="visualization" className="center-block">
+            <canvas className="canvas"  id="chart"style={{margin: "0 auto", height: "100vh", width: "100vh"}}></canvas>
           </Col> 
         </Row> 
       </Container> 
-      
+
+      <hr/>
+
+      <center><h4>Some general statistics of crime in India</h4></center>
+
       <Container fluid className="py-4">
         <Row className="row">
           <Col lg>
