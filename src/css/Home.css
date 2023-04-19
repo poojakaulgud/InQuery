@@ -1,3 +1,11 @@
+.nav-link {
+    color: "#b74c4d";   
+  }
+  
+.content {
+    background-color: black;
+}
+
 .form-control:focus {
     box-shadow: none;
 }
@@ -8,3 +16,5 @@
     border-radius: 0;
     padding-left: 0;
 }
+
+

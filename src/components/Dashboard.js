@@ -114,7 +114,7 @@ const Dashboard = () => {
         } else {
           x.style.display = "none";
         }
-      if(length<=5){
+      if(length<=2){
         new Chart(document.getElementById("chart"), {
           type: "pie",
           data: {
@@ -128,7 +128,7 @@ const Dashboard = () => {
           },
         });
       }
-      else if(length>5 && length<=10){
+      else if(length>2 && length<=5){
         new Chart(document.getElementById("chart"), {
           type: "bar",
           data: {
