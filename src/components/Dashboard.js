@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentChart, setCurrentChart] = useState();
+  const [answerChart, setAnswerChart] = useState();
   const states2016 = [];
   const states2017 = [];
   const states2018 = [];
@@ -96,7 +97,7 @@ const Dashboard = () => {
         list2 = res.data['data'][1];
         bool = true
       } 
-
+      console.log(bool)
       setIsLoading(false);
 
     }).catch((error) => {
@@ -116,11 +117,15 @@ const Dashboard = () => {
       var x = document.getElementById("visualization");
         if (x.style.display === "none") {
           x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
+        } 
+
+      if (answerChart) {
+        answerChart.destroy();
+      }    
+      
+      let newAnswerChart;
       if(length<=2){
-        new Chart(document.getElementById("chart"), {
+        newAnswerChart = new Chart(document.getElementById("chart"), {
           type: "pie",
           data: {
             labels: list1,
@@ -134,13 +139,12 @@ const Dashboard = () => {
         });
       }
       else if(length>2 && length<=5){
-        new Chart(document.getElementById("chart"), {
+        newAnswerChart = new Chart(document.getElementById("chart"), {
           type: "bar",
           data: {
             labels: list1,
             datasets: [
               {
-                
                 data: list2,
                 backgroundColor: "#8B0000",
               },
@@ -156,7 +160,7 @@ const Dashboard = () => {
         });
       }
       else{
-        new Chart(document.getElementById("chart"), {
+        newAnswerChart = new Chart(document.getElementById("chart"), {
           type: "line",
           spanGaps: false,
           data: {
@@ -178,6 +182,8 @@ const Dashboard = () => {
           }
         })
       }
+
+      setAnswerChart(newAnswerChart);
 
     }
     
