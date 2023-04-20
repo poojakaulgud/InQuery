@@ -8,6 +8,7 @@ import sqlite3 as sq
 import nltk
 from nltk.corpus import words, stopwords, wordnet
 import regex as re
+import enchant
 
 table = pd.read_csv('data/allcrime.csv')
 district_names = table.District.unique().tolist()
@@ -31,7 +32,7 @@ def isValidLocation(input):
 
 
 def checkValidPrompt(prompt):
-
+  d = enchant.Dict("en_US")
   keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
 
   prompt = prompt.replace('?', '')
@@ -40,7 +41,7 @@ def checkValidPrompt(prompt):
     word = word.lower()
     print(word)
 
-    if word not in words.words() and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
+    if not d.check(word) and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
       return False
     
   return True
@@ -94,7 +95,7 @@ def find_and_replace_closest_matching_location(prompt, sql_query):
 def get_answer_from_sql(prompt, conn):
 #   print(prompt)
   sql_query = get_sql_query(prompt)['choices'][0]['text']
-  print('raw sql', sql_query)
+  print('Raw SQL:\n', sql_query)
 
   if sql_query.find('District = ') != -1:
     final_query = find_and_replace_closest_matching_location(prompt, sql_query)
@@ -102,10 +103,10 @@ def get_answer_from_sql(prompt, conn):
   else:
     final_query = sql_query
 
-  print('query after location change', final_query)
+  print('\nQuery after location change:\n', final_query)
   answer = pd.read_sql(final_query, conn)
   # answer = pd.read_sql("SELECT Year, Cases FROM ipc WHERE District = 'Alwar'", conn)
-  print('answer after sql query', answer)
+  print('\nAnswer after SQL query \n', answer)
 
   # if number_of_rows == 1:
   #   final_answer = answer.iloc[0][0]
@@ -145,18 +146,25 @@ def connect_and_get_from_sql(prompt):
   final_numeric_answer = -1
 
   lst = list(answer.itertuples(index=False, name=None))
-  # data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
-  x, y = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][0], [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][1]
 
-  if any(type(item) == int for item in x):
-    if any(2016<=item<=2020 for item in x):
-      data = [x, y]
+  print('LIST', lst)
 
-    else:
-      data = [y, x]
+  if len(lst[0]) == 1:
+    data = [lst[0][0]]
 
   else:
-    data = [x, y]
+    # data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
+    x, y = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][0], [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][1]
+
+    if any(type(item) == int for item in x):
+      if any(2016<=item<=2020 for item in x):
+        data = [x, y]
+
+      else:
+        data = [y, x]
+
+    else:
+      data = [x, y]
 
   
 
