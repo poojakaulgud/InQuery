@@ -67,8 +67,6 @@ const Dashboard = () => {
   const ratewomencrime = [];
   const ratemurder = [];
   const ratekidnapping = [];
-  const dummy1=['2016','2017','2018','2019','2020']
-  const dummy2=[1,2,3,4,5]
 
   var bool = false;
   var list1 = [];
@@ -87,7 +85,9 @@ const Dashboard = () => {
 
       // setFinalAnswer(res.data['finalAnswer']);
       var answer = document.getElementById("finalAnswer");
+      var visualization = document.getElementById("visualization");
       answer.innerHTML = res.data['finalAnswer'];
+
       if (answer.style.display === "none") {
         answer.style.display = "block";
       }
@@ -97,6 +97,10 @@ const Dashboard = () => {
         list2 = res.data['data'][1];
         bool = true
       } 
+      else{
+          visualization.style.display = "none";
+ 
+      }
       console.log(bool)
       setIsLoading(false);
 
@@ -104,6 +108,8 @@ const Dashboard = () => {
       setIsLoading(false);
       var answer = document.getElementById("finalAnswer");
       answer.innerHTML = "Question is not valid, please try again";
+      var visualization = document.getElementById("visualization");
+      visualization.style.display = "none";
       if (answer.style.display === "none") {
         answer.style.display = "block";
       }
@@ -114,9 +120,10 @@ const Dashboard = () => {
       console.log(list2);
       var length=list1.length;
       console.log(length)
-      var x = document.getElementById("visualization");
-        if (x.style.display === "none") {
-          x.style.display = "block";
+      var visualization = document.getElementById("visualization");
+        if (visualization.style.display === "none") {
+          visualization.style.display = "block";
+          bool=false;
         } 
 
       if (answerChart) {

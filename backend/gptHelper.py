@@ -32,6 +32,7 @@ def isValidLocation(input):
 
 
 def checkValidPrompt(prompt):
+  nltk.download("stopwords")
   d = enchant.Dict("en_US")
   keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
 
