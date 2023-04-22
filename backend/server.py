@@ -1,6 +1,7 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
 from gptHelper import connect_and_get_from_sql, loadKey, checkValidPrompt
+from robertaHelper import get_roberta_answer
 
 app = Flask(__name__)
 CORS(app)
@@ -21,9 +22,12 @@ def query_metric():
 def query_context():
     prompt = request.args.get("prompt")
 
-    # TODO: Roberta logic
+    ansObj = get_roberta_answer(prompt)
+    print('serverAns: ', ansObj)
     
-    return ""
+    return ansObj
+    # return contextAnswer
+
 
 if __name__ == "__main__":
     app.run()
