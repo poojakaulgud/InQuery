@@ -10,7 +10,7 @@ from nltk.corpus import words, stopwords, wordnet
 import regex as re
 import enchant
 
-table = pd.read_csv('data/allcrime.csv')
+table = pd.read_csv('data/ipc.csv')
 district_names = table.District.unique().tolist()
 state_names = table.State.unique().tolist()
 
@@ -63,7 +63,7 @@ def get_sql_query(prompt):
 
 def find_and_replace_closest_matching_location(prompt, sql_query):
 
-  table = pd.read_csv('data/allcrime.csv')
+  table = pd.read_csv('data/ipc.csv')
   district_names = table.District.unique().tolist()
   location_found = False
 
@@ -147,7 +147,7 @@ def connect_and_get_from_sql(prompt):
 
   lst = list(answer.itertuples(index=False, name=None))
 
-  print('LIST', lst)
+  # print('LIST', lst)
 
   if len(lst[0]) == 1:
     data = [lst[0][0]]
