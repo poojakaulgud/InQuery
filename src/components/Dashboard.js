@@ -99,20 +99,27 @@ const Dashboard = () => {
       } 
       else{
           visualization.style.display = "none";
- 
       }
       console.log(bool)
       setIsLoading(false);
 
     }).catch((error) => {
       setIsLoading(false);
+
       var answer = document.getElementById("finalAnswer");
-      answer.innerHTML = "Question is not valid, please try again";
+      answer.innerHTML = "Some error occured, please try again";
       var visualization = document.getElementById("visualization");
-      visualization.style.display = "none";
       if (answer.style.display === "none") {
         answer.style.display = "block";
       }
+
+      // var answer = document.getElementById("finalAnswer");
+      // answer.innerHTML = "Question is not valid, please try again";
+      // var visualization = document.getElementById("visualization");
+      // visualization.style.display = "none";
+      // if (answer.style.display === "none") {
+      //   answer.style.display = "block";
+      // }
     })
     
     if(bool){

@@ -6,7 +6,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import sqlite3 as sq
 import nltk
-from nltk.corpus import words, stopwords, wordnet
+from nltk.corpus import stopwords
 import regex as re
 import enchant
 
@@ -24,6 +24,8 @@ def isValidLocation(input):
   output1 = process.extractOne(input, district_names, scorer=fuzz.ratio, score_cutoff=85)
   output2 = process.extractOne(input, state_names, scorer=fuzz.ratio, score_cutoff=85)
   
+  print(input, output1, output2)
+
   if output1 != None or output2 != None:
     return True
   
@@ -32,7 +34,7 @@ def isValidLocation(input):
 
 
 def checkValidPrompt(prompt):
-  nltk.download("stopwords")
+  # nltk.download("stopwords")
   d = enchant.Dict("en_US")
   keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
 
@@ -43,21 +45,27 @@ def checkValidPrompt(prompt):
     print(word)
 
     if not d.check(word) and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
-      return False
+      return False, "The question is not valid, please try again"
     
-  return True
+  return True, ""
 
 
 
 def get_sql_query(prompt):
+
+  # table_structure = """
+  # \n### Postgres SQL tables, with their properties:\n#\n# ipc(State, District, Year, Cases)\n# murder(State, District, Year, Cases)\n# cybercrime(State, District, Year, Cases)\n# women(State, District, Year, Cases)\n# theft(State, District, Year, Cases)\n# kidnap(State, District, Year, Cases)\n# allcrime(State, District, Year, CrimeType, Cases)\n#\n### The above tables contain the statistical crime data of India. Some of its properties are:\n# The table name ipc contains overall crime cases count.If the user query is about general crime count this table must be used. \n# The table names 'murder', 'cybercrime', 'women', 'theft' and 'kidnap' represent the crime types 'Murder','Cyber Crime','Crime committed against women','Theft and Burglary' and 'Kidnapping and Abduction' respectively\n# The attribute State represent the State in which the crime took place. State can have any one of these values ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jammu and Kashmir','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar','Chandigarh','Dadra and Nagar Haveli','Daman and Diu','Lakshadweep','Delhi','Puducherry']\n# The attribute District represent the District in which the crime took place. It contains different districts of India which belong to a state.\n# The attribute year defines the year in which the crimes were committed\n# The attribute Cases defines the number of cases for the tuple ('State', 'District', 'Year')\n### {}\nSELECT
+  # """
+  # final_prompt = table_structure.replace('{}', prompt)
+
   response = openai.Completion.create(
     #model="davinci:ft-personal-2023-02-14-16-36-05",
     # model="davinci:ft-personal-2023-04-10-13-56-18",
-    model="davinci:ft-personal-2023-04-10-16-35-44",
+    model="davinci:ft-personal-2023-04-22-14-01-00",
     temperature=0,
     prompt=prompt+"->",
     stop=["\n"],
-    max_tokens=50)
+    max_tokens=500)
 
   return response 
 
@@ -94,8 +102,9 @@ def find_and_replace_closest_matching_location(prompt, sql_query):
 
 
 def get_answer_from_sql(prompt, conn):
+
 #   print(prompt)
-  sql_query = get_sql_query(prompt)['choices'][0]['text']
+  sql_query = "SELECT" + get_sql_query(prompt)['choices'][0]['text']
   print('Raw SQL:\n', sql_query)
 
   if sql_query.find('District = ') != -1:
@@ -105,10 +114,21 @@ def get_answer_from_sql(prompt, conn):
     final_query = sql_query
 
   print('\nQuery after location change:\n', final_query)
-  answer = pd.read_sql(final_query, conn)
-  # answer = pd.read_sql("SELECT Year, Cases FROM ipc WHERE District = 'Alwar'", conn)
-  print('\nAnswer after SQL query \n', answer)
 
+  try:
+    answer = pd.read_sql(final_query, conn)
+    print('\nAnswer after SQL query \n', answer)
+  # answer = pd.read_sql("SELECT Year, Cases FROM ipc WHERE District = 'Alwar'", conn)
+    if answer.empty or answer.iloc[:,0][0] == None:
+      answer = "We do not have data for the question, please try again"
+      isValid = False
+
+    else:
+      isValid = True
+
+  except:
+    answer = "Query to dataset failed, please try again"
+    isValid = False
   # if number_of_rows == 1:
   #   final_answer = answer.iloc[0][0]
 
@@ -117,7 +137,7 @@ def get_answer_from_sql(prompt, conn):
 
   # print('final answer', final_answer)
 
-  return answer
+  return answer, isValid
 
 
 
@@ -140,49 +160,57 @@ for (question, answer) in answer_formats.itertuples(name=None, index=False):
 def connect_and_get_from_sql(prompt):
 
   conn = sq.connect('data/inquery.sqlite')
-  answer = get_answer_from_sql(prompt, conn)
+  answer, validSql = get_answer_from_sql(prompt, conn)
 
-  answer_format = get_answer(prompt, gpt_answer)
+  if validSql:
+  
+    answer_format = get_answer(prompt, gpt_answer)
 
-  final_numeric_answer = -1
+    final_numeric_answer = -1
 
-  lst = list(answer.itertuples(index=False, name=None))
+    lst = list(answer.itertuples(index=False, name=None))
 
-  # print('LIST', lst)
+    # print('LIST', lst)
 
-  if len(lst[0]) == 1:
-    data = [lst[0][0]]
-
-  else:
-    # data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
-    x, y = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][0], [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][1]
-
-    if any(type(item) == int for item in x):
-      if any(2016<=item<=2020 for item in x):
-        data = [x, y]
-
-      else:
-        data = [y, x]
+    if len(lst[0]) == 1:
+      data = [lst[0][0]]
 
     else:
-      data = [x, y]
+      # data = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][::-1]
+      x, y = [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][0], [[lst[j][i] for j in range(len(lst))] for i in range(len(lst[0]))][1]
 
+      if any(type(item) == int for item in x):
+        if any(2016<=item<=2020 for item in x):
+          data = [x, y]
+
+        else:
+          data = [y, x]
+
+      else:
+        data = [x, y]
+
+    
+
+    # if answer.shape[0] == 1:
+    if '{}' in answer_format:
+      print("ANSWER IS A SINGLE VALUE ", answer.iloc[0][0])
+      final_numeric_answer = answer.iloc[0][0]
+
+
+    final_answer = answer_format.replace('{}', str(final_numeric_answer))
+
+    conn.close()
+
+    return {
+      "finalAnswer": final_answer,
+      "data": data
+    }
   
-
-  # if answer.shape[0] == 1:
-  if '{}' in answer_format:
-    print("ANSWER IS A SINGLE VALUE ", answer.iloc[0][0])
-    final_numeric_answer = answer.iloc[0][0]
-
-
-  final_answer = answer_format.replace('{}', str(final_numeric_answer))
-
-  conn.close()
-
-  return {
-    "finalAnswer": final_answer,
-    "data": data
-  }
+  else:
+    return {
+      "finalAnswer": answer,
+      "data": []
+    }
 
 
 # loadKey()
