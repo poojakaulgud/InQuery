@@ -20,5 +20,12 @@
 h6{
     color: #f7838d;  
 }
+a{
+    text-decoration: none;
+    color: white;
+}
+a:hover{
+    color: #f7838d;  
 
+}
 
