@@ -11,11 +11,15 @@ def get_ques_list(ques):
     q=ques.lower()
     # print(q)
     punc = '!,.?'
+    ques_words = ['what', 'where', 'who', 'how', 'when', 'why']
     for ele in q:
         if ele in punc:
             q = q.replace(ele, "") 
     # print(q)
     ques_list = q.split()
+    for ele in ques_list:        
+        if ele in ques_words:
+            ques_list.remove(ele) 
     print(ques_list)
 
     return ques_list
@@ -40,7 +44,7 @@ def select_context(ques):
                 count += 1
         score.append(count)
 
-    print('score',score)
+    # print('score',score)
     print('maxscore',max(score))
     # print(type(kw_list[10]))
     if max(score) != 0:
