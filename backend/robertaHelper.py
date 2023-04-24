@@ -58,16 +58,19 @@ def select_context(ques):
         print(context)
         link = ''
         title = ''
+        flag = False
+    print('flag', flag)
     return context, link, title, flag
 
 
 def get_roberta_answer(question):
     context, link, title, flag = select_context(question)
-    result = nlp({
+    
+    if flag:
+        result = nlp({
         'question': question,
         'context': context
-    })
-    if flag:
+        })
         ansObj = {
             'answer': result['answer'],
             'link': link,
@@ -76,7 +79,8 @@ def get_roberta_answer(question):
         }
     else:
         ansObj = {
+            'answer': 'Related article not available in dataset.',
             'contextFound': False
         }
-    print('answer: ',result['answer'])
+    # print('answer: ',result['answer'])
     return ansObj

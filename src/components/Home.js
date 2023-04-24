@@ -22,10 +22,19 @@ const Home = () => {
                       var answer = document.getElementById("contextAnswer");
                       var link = document.getElementById("link");
                       var title = document.getElementById("title");
+                      var flag = res.data.contextFound;
+                      
                       
                       answer.innerHTML = res.data.answer;
-                      link.href = res.data.link;
-                      link.innerHTML = 'Read More @ '+ res.data.title;
+                      if(flag){
+                        link.href = res.data.link;
+                        link.innerHTML = 'Read More @ '+ res.data.title;
+                      }
+                      else{
+                        link.style.display = "none";
+                        link.innerHTML = '';
+                      }
+                      
                 
                       if (answer.style.display === "none") {
                         answer.style.display = "block";
