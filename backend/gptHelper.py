@@ -61,7 +61,8 @@ def get_sql_query(prompt):
   response = openai.Completion.create(
     #model="davinci:ft-personal-2023-02-14-16-36-05",
     # model="davinci:ft-personal-2023-04-10-13-56-18",
-    model="davinci:ft-personal-2023-04-22-14-01-00",
+    # model="davinci:ft-personal-2023-04-22-14-01-00",
+    model="davinci:ft-personal-2023-04-27-12-35-43",
     temperature=0,
     prompt=prompt+"->",
     stop=["\n"],
