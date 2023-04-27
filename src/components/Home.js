@@ -79,12 +79,12 @@ const Home = () => {
             </div>
         </nav>
 
-            <div className="container d-flex flex-column justify-content-top align-items-center" style={{height: "89.2vh",paddingTop:"5%"}}>
+            <div className="container d-flex flex-column justify-content-top align-items-center" style={{height: "79.2vh",paddingTop:"5%"}}>
             
             <img src={InQuery} width="350" height="120" />
             <div className="container-fuild text-center mb-2 text-light">
             <div class="typewriter">
-            <h4>Everything about crime in India!</h4>
+            <h4>Everything about crime in India...</h4>
             </div>
                    
                 </div>

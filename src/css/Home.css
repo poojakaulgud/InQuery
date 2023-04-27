@@ -32,7 +32,7 @@ a:hover{
 
 }
 .typewriter h4 {
-    color: #b70000;  
+    color: #696969;  
     font-family: 'Glass Antiqua', cursive;
     overflow: hidden; /* Ensures the content is not revealed until the animation */
     border-right: .15em solid orange; /* The typwriter cursor */
@@ -66,6 +66,6 @@ a:hover{
   .Footer p{
     font-size: large;
     font-weight: bold;
-    margin: 1.5%;
+    margin: 1%;
   }
 
