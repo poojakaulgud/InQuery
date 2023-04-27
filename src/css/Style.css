@@ -2,7 +2,7 @@
 .AboutUs, .Safeguards
 {
     color: #f7838d;
-    background-color: #121212;
+   
 }
 h1{
     color: white;
@@ -20,14 +20,14 @@ h3{
     color: white;
 }
 .accordion-button{
-    background-color: #121212;
+    background-color: black;
     color: white;
     border: none
 
 }
 .accordion {
     --bs-accordion-active-bg: none;
-    --bs-accordion-active-color: white;
+    --bs-accordion-active-color: black;
     --bs-accordion-btn-focus-box-shadow: white;
 }
 

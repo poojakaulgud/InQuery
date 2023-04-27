@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Carousel from 'react-grid-carousel'
 import Accordion from 'react-bootstrap/Accordion';
+import Footer from './Footer';
 
 
 
@@ -194,6 +195,7 @@ const Safeguards = () => {
                       
                            
                 </Carousel> 
+                
         </div>
     );
 }

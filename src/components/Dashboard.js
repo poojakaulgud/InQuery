@@ -9,11 +9,13 @@ import "../css/Dashboard.css";
 import Form from "react-bootstrap/Form";
 import Navbar from "./Navbar.js";
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 
 const Dashboard = () => {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const[totalcrime,setTotalcrime]=useState(0);
+  const[totalmurdercrime,setTotalmurdercrime]=useState(0)
   const [currentChart, setCurrentChart] = useState();
   const [answerChart, setAnswerChart] = useState();
   const states2016 = [];
@@ -393,6 +395,8 @@ const Dashboard = () => {
       for (let num of ratemurder) {
         totalmurdercrime = totalmurdercrime + Number(num);
       }
+      const formattedNumbermurder = totalmurdercrime.toLocaleString("en-US");
+      setTotalmurdercrime(formattedNumbermurder);
       let totaltheftcrime = 0;
       for (let num of ratetheft) {
         totaltheftcrime = totaltheftcrime + Number(num);
@@ -419,8 +423,10 @@ const Dashboard = () => {
       for (let num of rateipc2020) {
         ipc2020 = ipc2020 + Number(num);
       }
-      let totalcrime = 0;
-      totalcrime = ipc2016 + ipc2017 + ipc2018 + ipc2019 + ipc2020;
+      let totalcount = 0;
+      totalcount = ipc2016 + ipc2017 + ipc2018 + ipc2019 + ipc2020;
+      const formattedNumber = totalcount.toLocaleString("en-US");
+      setTotalcrime(formattedNumber);
 
       new Chart(document.getElementById("barchart"), {
         type: "bar",
@@ -788,20 +794,67 @@ const Dashboard = () => {
         </Row>
         <Row className="row mt-5" >
           <Col lg className="col">
-          <canvas className="canvas" id="barchart"></canvas>
+          <Row>
+            <Col>
+            <Card style={{ width: '18rem' }} className="Card">
+      
+      <Card.Body>
+        <Card.Title>
+        <br></br>
+
+          <center><h2 style={{fontFamily: 'Tomorrow', fontWeight:'bold'}}>{totalcrime}</h2></center>
+          <br></br></Card.Title>
+        <Card.Text>
+        <center> <h4>Total crime cases in India from 2016 to 2020</h4></center>
+        <br></br><br></br>
+       
+        </Card.Text>
+        
+      </Card.Body>
+    </Card>
+            </Col>
+            <Col>
+            <Card style={{ width: '18rem' }} className="Card">
+      
+      <Card.Body>
+        <Card.Title>
+        <br></br>
+
+          <center style={{fontFamily: 'Tomorrow', fontWeight:'bold'}}><h2>{totalmurdercrime}</h2></center>
+          <br></br></Card.Title>
+        <Card.Text>
+        <center> <h4>Total murder cases in India from 2016 to 2020</h4></center>
+        <br></br><br></br>
+       
+        </Card.Text>
+        
+      </Card.Body>
+    </Card>
+           </Col>
+          </Row>
           </Col>
-          <Col lg style={{ height: "50vh", width: "50vh" }} className="center-block">
-          <canvas className="canvas" id="pie" style={{margin: "0 auto"}}></canvas>
+          <Col>
+          <Row>
+            <Col lg  className="center-block">
+            <canvas className="canvas" id="barchart" style={{ height: "15vh", width: "20vh" }}></canvas>
+            </Col>
+            <Col  lg style={{ height: "50vh", width: "50vh" }} className="center-block">
+            <canvas className="canvas" id="pie" style={{margin: "0 auto"}}></canvas>
+            </Col>
+          
+          </Row>
+         
+         
           </Col>
         </Row> 
       </Container>
-      <Container>
+      {/* <Container>
       <Row className="py-2">
                 <Col lg>
                   <canvas className="canvas" id="barchart1"></canvas>
                 </Col>
               </Row>
-      </Container>
+      </Container> */}
       {/* <br></br> */}
       {/* <Container fluid>
       <Row style={{textAlign:'center',color:'#b74c4d'}}>

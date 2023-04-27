@@ -1,7 +1,10 @@
-.graph
+
+body{
+    background-color: black;
+}.graph
 {
     color: #f7838d;
-    background-color: #121212;
+    
     padding: 0;
     margin: 0;
 }
@@ -17,4 +20,10 @@
 Container{
     margin: 0;
     padding: 0;
+}
+.Card{
+    background-color: black;
+    border-radius: 5;
+    border: #f7838d;
+    border-style: solid;
 }

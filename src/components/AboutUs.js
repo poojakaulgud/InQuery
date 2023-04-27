@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GitHub from "../assets/images/Github.png";
 import LinkedIn from "../assets/images/Linkedin.png";
+import Footer from './Footer';
 
 const AboutUs = () => {
     return ( 
@@ -90,6 +91,7 @@ const AboutUs = () => {
         </Col>
       </Row>
     </Container>
+    <Footer></Footer>
         </div>
     );
 }
