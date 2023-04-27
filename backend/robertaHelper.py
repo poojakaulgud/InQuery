@@ -2,7 +2,7 @@ from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 import pandas as pd
 import ast
 
-modelname = 'poojakaulgud/qna_model_roberta'
+modelname = 'poojakaulgud/fine-tuned-roberta'
 model = AutoModelForQuestionAnswering.from_pretrained(modelname)
 tokenizer = AutoTokenizer.from_pretrained(modelname)
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
