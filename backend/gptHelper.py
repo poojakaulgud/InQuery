@@ -104,7 +104,7 @@ def find_and_replace_closest_matching_location(prompt, sql_query):
 def get_answer_from_sql(prompt, conn):
 
 #   print(prompt)
-  sql_query = "SELECT" + get_sql_query(prompt)['choices'][0]['text']
+  sql_query = "SELECT " + get_sql_query(prompt)['choices'][0]['text']
   print('Raw SQL:\n', sql_query)
 
   if sql_query.find('District = ') != -1:
