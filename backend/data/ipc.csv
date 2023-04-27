@@ -676,17 +676,17 @@ Chandigarh,Chandigarh,IPC Crime,2016,2996
 D&N Haveli,D&N Haveli,IPC Crime,2016,244
 Daman & Diu,Daman,IPC Crime,2016,200
 Daman & Diu,Diu,IPC Crime,2016,71
-Delhi UT,Central,IPC Crime,2016,12149
-Delhi UT,East,IPC Crime,2016,21789
-Delhi UT,New Delhi,IPC Crime,2016,3081
-Delhi UT,North,IPC Crime,2016,11438
-Delhi UT,North-East,IPC Crime,2016,20338
-Delhi UT,North-West,IPC Crime,2016,20210
-Delhi UT,Outer,IPC Crime,2016,25657
-Delhi UT,South,IPC Crime,2016,22284
-Delhi UT,South-East,IPC Crime,2016,17805
-Delhi UT,South-West,IPC Crime,2016,13207
-Delhi UT,West,IPC Crime,2016,26486
+Delhi,Central,IPC Crime,2016,12149
+Delhi,East,IPC Crime,2016,21789
+Delhi,New Delhi,IPC Crime,2016,3081
+Delhi,North,IPC Crime,2016,11438
+Delhi,North-East,IPC Crime,2016,20338
+Delhi,North-West,IPC Crime,2016,20210
+Delhi,Outer,IPC Crime,2016,25657
+Delhi,South,IPC Crime,2016,22284
+Delhi,South-East,IPC Crime,2016,17805
+Delhi,South-West,IPC Crime,2016,13207
+Delhi,West,IPC Crime,2016,26486
 Lakshadweep,Lakshadweep,IPC Crime,2016,36
 Puducherry,Karaikal,IPC Crime,2016,598
 Puducherry,Puducherry,IPC Crime,2016,3488
@@ -1387,20 +1387,20 @@ Chandigarh,Chandigarh,IPC Crime,2017,3240
 D&N Haveli,D&N Haveli,IPC Crime,2017,266
 D&N Haveli,Daman,IPC Crime,2017,256
 D&N Haveli,Diu,IPC Crime,2017,111
-Delhi UT,Central,IPC Crime,2017,10983
-Delhi UT,East,IPC Crime,2017,17838
-Delhi UT,New Delhi,IPC Crime,2017,3514
-Delhi UT,North,IPC Crime,2017,11023
-Delhi UT,North-East,IPC Crime,2017,16623
-Delhi UT,North-West,IPC Crime,2017,21911
-Delhi UT,Outer,IPC Crime,2017,15324
-Delhi UT,South,IPC Crime,2017,20825
-Delhi UT,South-East,IPC Crime,2017,18837
-Delhi UT,South-West,IPC Crime,2017,10092
-Delhi UT,West,IPC Crime,2017,18181
-Delhi UT,Rohini,IPC Crime,2017,20190
-Delhi UT,Shahdara,IPC Crime,2017,14662
-Delhi UT,Dwarka,IPC Crime,2017,13821
+Delhi,Central,IPC Crime,2017,10983
+Delhi,East,IPC Crime,2017,17838
+Delhi,New Delhi,IPC Crime,2017,3514
+Delhi,North,IPC Crime,2017,11023
+Delhi,North-East,IPC Crime,2017,16623
+Delhi,North-West,IPC Crime,2017,21911
+Delhi,Outer,IPC Crime,2017,15324
+Delhi,South,IPC Crime,2017,20825
+Delhi,South-East,IPC Crime,2017,18837
+Delhi,South-West,IPC Crime,2017,10092
+Delhi,West,IPC Crime,2017,18181
+Delhi,Rohini,IPC Crime,2017,20190
+Delhi,Shahdara,IPC Crime,2017,14662
+Delhi,Dwarka,IPC Crime,2017,13821
 Lakshadweep,Lakshadweep,IPC Crime,2017,78
 Puducherry,Karaikal,IPC Crime,2017,673
 Puducherry,Puducherry,IPC Crime,2017,3210
@@ -2103,20 +2103,20 @@ Chandigarh,Chandigarh,IPC Crime,2018,3072
 D&N Haveli,D&N Haveli,IPC Crime,2018,255
 Daman & Diu,Daman,IPC Crime,2018,256
 Daman & Diu,Diu,IPC Crime,2018,63
-Delhi UT,Central,IPC Crime,2018,11426
-Delhi UT,East,IPC Crime,2018,17608
-Delhi UT,New Delhi,IPC Crime,2018,3026
-Delhi UT,North,IPC Crime,2018,14972
-Delhi UT,North-East,IPC Crime,2018,18114
-Delhi UT,North-West,IPC Crime,2018,25960
-Delhi UT,Outer,IPC Crime,2018,18194
-Delhi UT,South,IPC Crime,2018,23484
-Delhi UT,South-East,IPC Crime,2018,22645
-Delhi UT,South-West,IPC Crime,2018,12170
-Delhi UT,West,IPC Crime,2018,18253
-Delhi UT,Rohini,IPC Crime,2018,21282
-Delhi UT,Shahdara,IPC Crime,2018,14683
-Delhi UT,Dwarka,IPC Crime,2018,17012
+Delhi,Central,IPC Crime,2018,11426
+Delhi,East,IPC Crime,2018,17608
+Delhi,New Delhi,IPC Crime,2018,3026
+Delhi,North,IPC Crime,2018,14972
+Delhi,North-East,IPC Crime,2018,18114
+Delhi,North-West,IPC Crime,2018,25960
+Delhi,Outer,IPC Crime,2018,18194
+Delhi,South,IPC Crime,2018,23484
+Delhi,South-East,IPC Crime,2018,22645
+Delhi,South-West,IPC Crime,2018,12170
+Delhi,West,IPC Crime,2018,18253
+Delhi,Rohini,IPC Crime,2018,21282
+Delhi,Shahdara,IPC Crime,2018,14683
+Delhi,Dwarka,IPC Crime,2018,17012
 Lakshadweep,Lakshadweep,IPC Crime,2018,48
 Puducherry,Karaikal,IPC Crime,2018,0
 Puducherry,Puducherry,IPC Crime,2018,3606
@@ -2835,21 +2835,21 @@ Chandigarh,Chandigarh,IPC Crime,2019,2819
 D&N Haveli,D&N Haveli,IPC Crime,2019,226
 Daman & Diu,Daman,IPC Crime,2019,258
 Daman & Diu,Diu,IPC Crime,2019,64
-Delhi UT,Central,IPC Crime,2019,12995
-Delhi UT,East,IPC Crime,2019,21936
-Delhi UT,New Delhi,IPC Crime,2019,3571
-Delhi UT,North,IPC Crime,2019,15881
-Delhi UT,North-East,IPC Crime,2019,22845
-Delhi UT,North-West,IPC Crime,2019,24732
-Delhi UT,Outer,IPC Crime,2019,22513
-Delhi UT,South,IPC Crime,2019,23400
-Delhi UT,South-East,IPC Crime,2019,23467
-Delhi UT,South-West,IPC Crime,2019,15660
-Delhi UT,West,IPC Crime,2019,22915
-Delhi UT,Rohini,IPC Crime,2019,22335
-Delhi UT,Shahdara,IPC Crime,2019,17905
-Delhi UT,Dwarka,IPC Crime,2019,24302
-Delhi UT,Outer North,IPC Crime,2019,11318
+Delhi,Central,IPC Crime,2019,12995
+Delhi,East,IPC Crime,2019,21936
+Delhi,New Delhi,IPC Crime,2019,3571
+Delhi,North,IPC Crime,2019,15881
+Delhi,North-East,IPC Crime,2019,22845
+Delhi,North-West,IPC Crime,2019,24732
+Delhi,Outer,IPC Crime,2019,22513
+Delhi,South,IPC Crime,2019,23400
+Delhi,South-East,IPC Crime,2019,23467
+Delhi,South-West,IPC Crime,2019,15660
+Delhi,West,IPC Crime,2019,22915
+Delhi,Rohini,IPC Crime,2019,22335
+Delhi,Shahdara,IPC Crime,2019,17905
+Delhi,Dwarka,IPC Crime,2019,24302
+Delhi,Outer North,IPC Crime,2019,11318
 Lakshadweep,Lakshadweep,IPC Crime,2019,123
 Puducherry,Karaikal,IPC Crime,2019,0
 Puducherry,Puducherry,IPC Crime,2019,3167
