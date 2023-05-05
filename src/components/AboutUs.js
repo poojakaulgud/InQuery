@@ -26,56 +26,56 @@ const AboutUs = () => {
     </Container>
     <Container>
     <br></br>
-    <br></br><br></br>
+    
     <Row>
         <Col><center><h1 style={{color: '#b74c4d'}}>Our Team</h1></center></Col>
     </Row>
     <br></br><br></br>
       <Row>
-        <Col><center><h3>Chaitanya Bandiwdekar</h3>
+        <Col><center><h4>Chaitanya Bandiwdekar</h4>
         <br></br>
         <Container>
           <Row>
             <Col>
-            <a href="link address"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
+            <a href="https://github.com/ChaitanyaBandiwdekar"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
             </Col>
             <Col>
-            <a href="link address"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile'/></a>
+            <a href="https://www.linkedin.com/in/chaitanya-bandiwdekar-11329a18a"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile'/></a>
             </Col>
           </Row>
         </Container>
         </center>
         </Col>
-        <Col><center><h3>Pooja Kaulgud</h3>
+        <Col><center><h4>Pooja Kaulgud</h4>
         <br></br>
         <Container>
           <Row>
             <Col>
-            <a href="link address"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
+            <a href="https://github.com/poojakaulgud"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
             </Col>
             <Col>
-            <a href="link address"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile'/></a>
+            <a href="https://www.linkedin.com/in/pooja-kaulgud-b29a921b4/"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile'/></a>
             </Col>
           </Row>
         </Container>
         </center>
         </Col>
         
-        <Col><center><h3>Siddhesh Bagwe</h3>
+        <Col><center><h4>Siddhesh Bagwe</h4>
         <br></br>
         <Container>
           <Row>
             <Col>
-            <a href="link address"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
+            <a href="https://github.com/sid-bagwe"><img src={GitHub} width="100" height="75" style={{borderRadius:'50%'}} alt='github profile'/></a>
             </Col>
             <Col>
-            <a href="link address"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile' /></a>
+            <a href="https://www.linkedin.com/in/siddhesh-bagwe-b14985192/"><img src={LinkedIn} width="100" height="75" style={{borderRadius:'50%'}} alt='linkedin profile' /></a>
             </Col>
           </Row>
         </Container>
         </center>
         </Col>
-        <Col><center><h3>Aditi Kulkarni</h3>
+        <Col><center><h4>Aditi Kulkarni</h4>
         <br></br>
         <Container>
           <Row>

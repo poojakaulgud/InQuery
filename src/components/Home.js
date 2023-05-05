@@ -3,7 +3,6 @@ import '../css/Home.css';
 import React, { useState, useEffect } from "react";
 import Navbar from './Navbar';
 import axios from 'axios';
-
 import InQuery from "../assets/images/InQueryHome.jpg";
 import InQuery_logo from "../assets/images/InQuery_logo.png";
 import { Link } from "react-router-dom";
@@ -56,7 +55,7 @@ const Home = () => {
             <nav className="navbar navbar-expand-lg" style={{backgroundColor: "#121212"}}>
             <div className="container-fluid">
                 <Link className="navbar-brand" to={'/'}>
-                    <img src={InQuery_logo} width="100" height="45" />
+                    <img src={InQuery_logo} width="80" height="45" />
                 </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -80,16 +79,15 @@ const Home = () => {
             </div>
         </nav>
 
-            <div className="container d-flex flex-column justify-content-top align-items-center" style={{height: "89.2vh",paddingTop:"5%"}}>
-            <br></br>
-            <img src={InQuery} width="350" height="200" />
+            <div className="container d-flex flex-column justify-content-top align-items-center" style={{height: "79.2vh",paddingTop:"5%"}}>
+            
+            <img src={InQuery} width="350" height="120" />
             <div className="container-fuild text-center mb-2 text-light">
             <div class="typewriter">
-            <h4>Everything about crime in India!</h4>
+            <h4>Everything about crime in India...</h4>
             </div>
                    
                 </div>
-                <br></br>
                 <div className="container-fluid d-flex justify-content-center align-items-center" >
                     <div class="p-2 bg-light rounded rounded-pill shadow-sm mb-4 w-50 ">
                         <div className="input-group bg-light">

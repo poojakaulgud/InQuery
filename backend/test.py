@@ -1,24 +1,13 @@
-from gptHelper import checkValidPrompt, isValidLocation
-import enchant
-from nltk.corpus import words, stopwords, wordnet
-# print(d.check("women"))
+import openai
+from gptHelper import loadKey
 
-# print(isValidLocation("is"))
+loadKey()
 
-def checkValidPrompt(prompt):
-  d = enchant.Dict("en_US")
-  keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
+response = openai.Completion.create(
+    model="davinci:ft-personal-2023-04-22-14-01-00",
+    temperature=0,
+    prompt="What was the count of kidnappings in Maharashtra in 2019?->",
+    stop=["\n"],
+    max_tokens=60)
 
-  prompt = prompt.replace('?', '')
-
-  for word in prompt.split(' '):
-    word = word.lower()
-    print(word)
-
-    if not d.check(word) and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
-      return False
-    
-  return True
-
-
-print(checkValidPrompt("what is the murder count in mumbai in 2019?"))
+print((response))
