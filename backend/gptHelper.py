@@ -5,11 +5,23 @@ import pandas as pd
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import sqlite3 as sq
-import nltk
 from nltk.corpus import stopwords
-import regex as re
 import enchant
-
+import pandas as pd
+import geopandas as gpd
+import pandas as pd
+def allLower(my_list):
+    return [x.lower() for x in my_list]
+def removeElements(A, B):
+    for i in range(len(B)-len(A)+1):
+        for j in range(len(A)):
+            if B[i + j] != A[j]:
+                break
+        else:
+            return True
+    return False
+fp = "data/states.shp"
+map_df = gpd.read_file(fp)
 table = pd.read_csv('data/ipc.csv')
 district_names = table.District.unique().tolist()
 state_names = table.State.unique().tolist()
@@ -102,6 +114,54 @@ def find_and_replace_closest_matching_location(prompt, sql_query):
 
 
 def get_answer_from_sql(prompt, conn):
+  words=['nearby','around','touching']
+  if any([x in prompt for x in words]):
+    question=prompt
+    question = question.replace("?", "")
+    state_name='-'
+    print(question)
+    question_list=question.split()
+    print(question_list)
+    for i in range(0,len(state_names)):
+  
+      check =  removeElements(allLower(state_names[i].split()), allLower(question_list))
+  
+  
+      if(check):
+        state_name=state_names[i]
+        break 
+      print('State: ' + state_name)
+    g = map_df[map_df.st_nm == state_name]["geometry"].values[0]
+    neighbors = map_df[map_df.geometry.touches(g)].st_nm.tolist()
+    
+    for i in range(0,len(words)):
+      if(words[i] in allLower(question_list)):
+        position=allLower(question_list).index(words[i])
+        question_list.pop(position)
+        break
+    for i in range(0,len(neighbors)):
+      if(i==len(neighbors)-1):
+        question_list.insert(position+i, neighbors[i])
+      else:
+        question_list.insert(position+i, neighbors[i]+',')
+      
+
+    output_question = ' '.join([str(elem) for elem in question_list])
+    print('output', output_question)
+    state_name_list=state_name.split()
+    state_name_list=allLower(state_name_list)
+
+    check=removeElements(state_name_list, allLower(output_question.split()))
+
+    if(check):
+      for i in range(0,len(state_name_list)):
+        lowerlist=allLower(output_question.split())
+        position=(lowerlist).index(state_name_list[i])
+        changequestion=output_question.split()
+        changequestion.pop(position)
+        prompt = ' '.join([str(elem) for elem in changequestion])
+      
+    print(prompt)
 
 #   print(prompt)
   sql_query = "SELECT" + get_sql_query(prompt)['choices'][0]['text']

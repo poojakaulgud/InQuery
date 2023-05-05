@@ -3,7 +3,7 @@ import '../css/Home.css';
 import React, { useState, useEffect } from "react";
 import Navbar from './Navbar';
 import axios from 'axios';
-import Homeimg from "../assets/images/homeimg5.png";
+
 import InQuery from "../assets/images/InQueryHome.jpg";
 import InQuery_logo from "../assets/images/InQuery_logo.png";
 import { Link } from "react-router-dom";
