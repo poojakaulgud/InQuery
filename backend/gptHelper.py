@@ -10,8 +10,19 @@ import enchant
 import pandas as pd
 import geopandas as gpd
 import pandas as pd
+
+
+fp = "data/states.shp"
+map_df = gpd.read_file(fp)
+table = pd.read_csv('data/ipc.csv')
+district_names = table.District.unique().tolist()
+state_names = table.State.unique().tolist()
+
+
 def allLower(my_list):
     return [x.lower() for x in my_list]
+
+
 def removeElements(A, B):
     for i in range(len(B)-len(A)+1):
         for j in range(len(A)):
@@ -20,11 +31,7 @@ def removeElements(A, B):
         else:
             return True
     return False
-fp = "data/states.shp"
-map_df = gpd.read_file(fp)
-table = pd.read_csv('data/ipc.csv')
-district_names = table.District.unique().tolist()
-state_names = table.State.unique().tolist()
+
 
 def loadKey():
   with open('data/API_SECRET_KEY.txt') as f:
@@ -44,7 +51,6 @@ def isValidLocation(input):
   return False
 
 
-
 def checkValidPrompt(prompt):
   # nltk.download("stopwords")
   d = enchant.Dict("en_US")
@@ -62,7 +68,6 @@ def checkValidPrompt(prompt):
   return True, ""
 
 
-
 def get_sql_query(prompt):
 
   # table_structure = """
@@ -74,7 +79,7 @@ def get_sql_query(prompt):
     #model="davinci:ft-personal-2023-02-14-16-36-05",
     # model="davinci:ft-personal-2023-04-10-13-56-18",
     # model="davinci:ft-personal-2023-04-22-14-01-00",
-    model="davinci:ft-personal-2023-04-27-12-35-43",
+    model="davinci:ft-personal-2023-05-05-10-20-20",
     temperature=0,
     prompt=prompt+"->",
     stop=["\n"],
@@ -97,6 +102,8 @@ def find_and_replace_closest_matching_location(prompt, sql_query):
       break
 
   if location_found:
+
+    location_indices = [i for i in range(len(sql_query)) if sql_query.startswith('District = ', i)]
     closest_matching_location, _ = output1 # output1 if output1 != None else output2
     
     # closest_matching_location = process.extract(place_entity.cities[0], table.District.unique())[0][0]
