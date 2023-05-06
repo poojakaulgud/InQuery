@@ -52,18 +52,63 @@ def isValidLocation(input):
 
 
 def checkValidPrompt(prompt):
+
+  if prompt.find('jammu') != -1 or prompt.find('Jammu') != -1:
+    return True, ""
+  
   # nltk.download("stopwords")
   d = enchant.Dict("en_US")
   keywords = ['india', 'cybercrime', 'cyber', 'crime', 'ipc', 'women']
 
   prompt = prompt.replace('?', '')
+  promptSplit = prompt.split(' ')
 
-  for word in prompt.split(' '):
-    word = word.lower()
+  index = 0
+
+  while index < len(promptSplit):
+    word = promptSplit[index].lower()
     print(word)
 
     if not d.check(word) and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
-      return False, "The question is not valid, please try again"
+      try:
+        if not isValidLocation(word + promptSplit[index + 1]):
+          if not isValidLocation(word + promptSplit[index + 1] + promptSplit[index + 2]):
+            return False, "The question is not valid, please try again"
+          
+          else:
+            index += 3
+
+        else:
+          index += 2
+
+      except:
+        return False, "The question is not valid, please try again"
+
+    index += 1
+  # for index, word in enumerate(promptSplit):
+  #   word = word.lower()
+  #   print(word)
+
+  #   if not skip:
+  #     if not d.check(word) and word not in stopwords.words('english') and not isValidLocation(word) and not word.isnumeric() and not word in keywords:
+  #       try:
+  #         if not isValidLocation(word + promptSplit[index + 1]):
+  #           if not isValidLocation(word + promptSplit[index + 1] + promptSplit[index + 2]):
+  #             return False, "The question is not valid, please try again"
+            
+  #           else:
+  #             continue
+
+  #         else:
+  #           skip = True
+  #           continue
+
+  #       except:
+  #         return False, "The question is not valid, please try again"
+        
+  #   else:
+  #     skip = False
+  #     continue
     
   return True, ""
 
@@ -88,41 +133,85 @@ def get_sql_query(prompt):
   return response 
 
 
-def find_and_replace_closest_matching_location(prompt, sql_query):
+# def find_and_replace_closest_matching_location(prompt, sql_query):
 
-  table = pd.read_csv('data/ipc.csv')
-  district_names = table.District.unique().tolist()
-  location_found = False
+#   table = pd.read_csv('data/ipc.csv')
+#   district_names = table.District.unique().tolist()
+#   location_found = False
 
-  for word in prompt.split(' '):
-    output1 = process.extractOne(word, district_names, scorer=fuzz.ratio, score_cutoff=85)
-    # output2 = None # process.extractOne(word, district_names, scorer=fuzz.token_set_ratio, score_cutoff=85)
-    if output1 != None: #or output2 != None:
-      location_found = True
-      break
+#   for word in prompt.split(' '):
+#     output1 = process.extractOne(word, district_names, scorer=fuzz.ratio, score_cutoff=85)
+#     # output2 = None # process.extractOne(word, district_names, scorer=fuzz.token_set_ratio, score_cutoff=85)
+#     if output1 != None: #or output2 != None:
+#       location_found = True
+#       break
 
-  if location_found:
+#   if location_found:
 
-    location_indices = [i for i in range(len(sql_query)) if sql_query.startswith('District = ', i)]
-    closest_matching_location, _ = output1 # output1 if output1 != None else output2
+#     district_indices = [i+len('District = ')+1 for i in range(len(sql_query)) if sql_query.startswith('District = ', i)]
+#     closest_matching_location, _ = output1 # output1 if output1 != None else output2
     
-    # closest_matching_location = process.extract(place_entity.cities[0], table.District.unique())[0][0]
-    head, splitter, tail = sql_query.partition('District = ')
+#     # closest_matching_location = process.extract(place_entity.cities[0], table.District.unique())[0][0]
+#     head, splitter, tail = sql_query.partition('District = ')
 
-    words = tail.split(' ')
-    words[0] = '\'' + closest_matching_location + '\''
-    tail = ' '.join(words)
+#     words = tail.split(' ')
+#     words[0] = '\'' + closest_matching_location + '\''
+#     tail = ' '.join(words)
 
-    final_query = head + splitter + tail
+#     final_query = head + splitter + tail
+
+#   else:
+#     final_query = sql_query
+
+#   return final_query
+
+
+def find_and_replace_closest_matching_location(sql_query):
+
+  district_indices = [i+len('District = ')+1 for i in range(len(sql_query)) if sql_query.startswith('District = ', i)]
+  state_indices = [i+len('State = ')+1 for i in range(len(sql_query)) if sql_query.startswith('State = ', i)]
+
+  final_query = sql_query
+  
+  if len(district_indices) == 0 and len(state_indices) == 0:
+    return final_query
+
+  if len(district_indices) != 0:
+    for index in district_indices:
+      end_index = index + sql_query[index:].find('\'')
+      district = sql_query[index:end_index]
+
+      output = process.extractOne(district, district_names, scorer=fuzz.ratio, score_cutoff=85)
+
+      if output == None:
+        continue
+
+      else:
+        closest_matching_location, _ = output
+        final_query = final_query.partition(district)[0] + closest_matching_location + final_query.partition(district)[2]
 
   else:
-    final_query = sql_query
+    for index in state_indices:
+      end_index = index + sql_query[index:].find('\'')
+      state = sql_query[index:end_index]
+
+      output = process.extractOne(state, state_names, scorer=fuzz.ratio, score_cutoff=85)
+
+      if output == None:
+        continue
+
+      else:
+        closest_matching_location, _ = output
+        final_query = final_query.partition(state)[0] + closest_matching_location + final_query.partition(state)[2]
+
 
   return final_query
 
 
 def get_answer_from_sql(prompt, conn):
+
   words=['nearby','around','touching']
+
   if any([x in prompt for x in words]):
     question=prompt
     question = question.replace("?", "")
@@ -130,36 +219,36 @@ def get_answer_from_sql(prompt, conn):
     print(question)
     question_list=question.split()
     print(question_list)
+
     for i in range(0,len(state_names)):
-  
       check =  removeElements(allLower(state_names[i].split()), allLower(question_list))
-  
-  
       if(check):
-        state_name=state_names[i]
+        state_name = state_names[i]
         break 
+
       print('State: ' + state_name)
+
     g = map_df[map_df.st_nm == state_name]["geometry"].values[0]
     neighbors = map_df[map_df.geometry.touches(g)].st_nm.tolist()
     
     for i in range(0,len(words)):
       if(words[i] in allLower(question_list)):
-        position=allLower(question_list).index(words[i])
+        position = allLower(question_list).index(words[i])
         question_list.pop(position)
         break
+
     for i in range(0,len(neighbors)):
-      if(i==len(neighbors)-1):
+      if(i == len(neighbors)-1):
         question_list.insert(position+i, neighbors[i])
       else:
         question_list.insert(position+i, neighbors[i]+',')
       
-
     output_question = ' '.join([str(elem) for elem in question_list])
     print('output', output_question)
     state_name_list=state_name.split()
     state_name_list=allLower(state_name_list)
 
-    check=removeElements(state_name_list, allLower(output_question.split()))
+    check = removeElements(state_name_list, allLower(output_question.split()))
 
     if(check):
       for i in range(0,len(state_name_list)):
@@ -175,8 +264,8 @@ def get_answer_from_sql(prompt, conn):
   sql_query = "SELECT " + get_sql_query(prompt)['choices'][0]['text']
   print('Raw SQL:\n', sql_query)
 
-  if sql_query.find('District = ') != -1:
-    final_query = find_and_replace_closest_matching_location(prompt, sql_query)
+  if sql_query.find('District = ') != -1 or sql_query.find('State = ') != -1:
+    final_query = find_and_replace_closest_matching_location(sql_query)
 
   else:
     final_query = sql_query
