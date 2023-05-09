@@ -32,8 +32,9 @@ a:hover{
 
 }
 .typewriter h4 {
-    color: #696969;  
-    font-family: 'Glass Antiqua', cursive;
+    color: #696969; 
+    font-family: 'Inconsolata', monospace; 
+    /* font-family: 'Glass Antiqua', cursive; */
     overflow: hidden; /* Ensures the content is not revealed until the animation */
     border-right: .15em solid orange; /* The typwriter cursor */
     white-space: nowrap; /* Keeps the content on a single line */

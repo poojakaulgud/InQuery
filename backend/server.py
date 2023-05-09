@@ -12,6 +12,7 @@ def query_metric():
     prompt = request.args.get("prompt")
 
     print("User input:", prompt)
+    prompt=prompt.strip()
 
     isValid, msg = checkValidPrompt(prompt)
 

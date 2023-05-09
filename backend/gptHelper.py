@@ -297,12 +297,13 @@ def get_answer_from_sql(prompt, conn):
         check = removeElements(state_name_list, allLower(output_question.split()))
 
         if check:
-            for i in range(0, len(state_name_list)):
-                lowerlist = allLower(output_question.split())
-                position = (lowerlist).index(state_name_list[i])
-                changequestion = output_question.split()
-                changequestion.pop(position)
-                prompt = " ".join([str(elem) for elem in changequestion])
+            prompt=output_question.replace(state_name, "")
+            # for i in range(0, len(state_name_list)):
+            #     lowerlist = allLower(output_question.split())
+            #     position = (lowerlist).index(state_name_list[i])
+            #     changequestion = output_question.split()
+            #     changequestion.pop(position)
+            #     prompt = " ".join([str(elem) for elem in changequestion])
 
         print(prompt)
 
@@ -340,7 +341,7 @@ def get_answer_from_sql(prompt, conn):
 
     # print('final answer', final_answer)
 
-    return answer, isValid
+    return answer, isValid, prompt
 
 
 def get_answer(prompt, gpt_answer):
@@ -360,11 +361,14 @@ for question, answer in answer_formats.itertuples(name=None, index=False):
 
 def connect_and_get_from_sql(prompt):
     conn = sq.connect("data/inquery.sqlite")
-    answer, validSql = get_answer_from_sql(prompt, conn)
+    answer, validSql, changed_prompt = get_answer_from_sql(prompt, conn)
 
     if validSql:
-        answer_format = get_answer(prompt, gpt_answer)
+        if changed_prompt==prompt:
 
+            answer_format = get_answer(prompt, gpt_answer)
+        else:
+            answer_format="The visualization is as follows: "
         final_numeric_answer = -1
 
         lst = list(answer.itertuples(index=False, name=None))
