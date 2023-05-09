@@ -20,7 +20,7 @@ def get_ques_list(ques):
     for ele in ques_list:        
         if ele in ques_words:
             ques_list.remove(ele) 
-    print(ques_list)
+    print('preprocessed question to calculate score: ', ques_list)
 
     return ques_list
 
@@ -44,26 +44,27 @@ def select_context(ques):
                 count += 1
         score.append(count)
 
-    # print('score',score)
-    print('maxscore',max(score))
+    print('calculated maxscore : ',max(score))
     # print(type(kw_list[10]))
     if max(score) != 0:
         flag = True
         context = articles[score.index(max(score))]
-        print(context)
+        print('selected context index: ', score.index(max(score)))
+        print('selected context based on maxscore: ', context)
         link = links[score.index(max(score))]
         title = titles[score.index(max(score))]
     else:
         context = ''
-        print(context)
+        print('selected context based on maxscore:  ', context)
         link = ''
         title = ''
         flag = False
-    print('flag', flag)
+    # print('flag', flag)
     return context, link, title, flag
 
 
 def get_roberta_answer(question):
+    print('user input: ', question)
     context, link, title, flag = select_context(question)
     
     if flag:
@@ -82,5 +83,5 @@ def get_roberta_answer(question):
             'answer': 'Related article not available in dataset.',
             'contextFound': False
         }
-    # print('answer: ',result['answer'])
+    print('resulted answer from fine-tuned RoBERTa: ',result['answer'])
     return ansObj
